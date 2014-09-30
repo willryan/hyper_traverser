@@ -2,26 +2,43 @@ require 'spec_helper'
 
 describe HyperTraverser::HyperState do
   describe "data" do
-    skip
-  end
+    it "returns data items" do
+      skip
+    end
 
-  describe "links" do
-    skip
+    it "resolves data items before returning them" do
+      skip
+    end
   end
 
   describe "actions" do
-    skip
+    it "returns actions by name" do
+      skip
+    end
   end
 
   describe "collections" do
-    skip
+    it "returns collection items" do
+      skip
+    end
+
+    it "resolves collection items before returning them" do
+      skip
+    end
   end
 
   describe "data not found" do
-    skip
+    it "throws an exception when looking for a missing key" do
+     skip
+    end
   end
 
   describe "exploration" do
-    skip
+    describe ".actions" do
+    end
+    describe ".data" do
+    end
+    describe ".collection" do
+    end
   end
 end

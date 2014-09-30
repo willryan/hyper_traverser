@@ -4,23 +4,13 @@ module HyperTraverser
       @inputs = Hash[inputs.map do |k, v|
         [k, HyperInput.new(v)]
       end]
-    end
-
-    # TODO define methods
-    def method_missing(method, *params)
-      if method.to_s =~ /=$/ # setter
-        key = method.to_s.chop
-        if @inputs[key]
-          @inputs[key].value = params[0]
-        else
-          raise HyperException, "no input #{key}"
+      @inputs.each do |k, v|
+        receiver = self
+        receiver.define_singleton_method(k) do |*args|
+          v.value
         end
-      else # getter
-        key = method.to_s
-        if @inputs[key]
-          @inputs[key].value
-        else
-          raise HyperException, "no input #{key}"
+        receiver.define_singleton_method("#{k}=") do |*args|
+          v.value = args[0]
         end
       end
     end

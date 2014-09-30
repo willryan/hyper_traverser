@@ -29,8 +29,8 @@ describe HyperTraverser::HyperInputs do
 
   describe "missing input" do
     it "blows up when you try to access a field that doesn't exist" do
-      expect { inputs.foo = :banana }.to raise_error HyperTraverser::HyperException
-      expect { inputs.wat }.to raise_error HyperTraverser::HyperException
+      expect { inputs.foo = :banana }.to raise_error NoMethodError
+      expect { inputs.wat }.to raise_error NoMethodError
     end
   end
 end

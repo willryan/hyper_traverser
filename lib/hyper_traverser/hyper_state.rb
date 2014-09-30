@@ -1,43 +1,36 @@
 module HyperTraverser
   class HyperState
 
-    def initialize(data, links, actions)
+    def initialize(data, actions)
       if data["collection"]
         @collection = data.delete "collection"
       end
       @data = data
-      @links = links
+      @data.each do |k, v|
+        receiver = self
+        receiver.define_singleton_method(k) do |*args|
+          HyperState::resolve_object v
+        end
+      end
       @actions = actions
+      @actions.each do |k, v|
+        receiver = self
+        receiver.define_singleton_method(k) do |*args|
+          v
+        end
+      end
     end
 
     def [](index)
       if @collection
-        @collection[index]
+        HyperState.resolve_object(@collection[index])
       else
-        raise "state is not a collection"
-      end
-    end
-
-    # TODO define methods
-    def method_missing(method, *params)
-      key = method.to_s
-      if @actions[key]
-        @actions[key]
-      elsif @links[key]
-        @links[key].resolve
-      elsif @data[key]
-        @data[key]
-      else
-        raise "#{method} not found"
+        raise HyperTraverser::HyperException, "state is not a collection"
       end
     end
 
     def self.actions(state)
       state.instance_variable_get "@actions"
-    end
-
-    def self.links(state)
-      state.instance_variable_get "@links"
     end
 
     def self.data(state)
@@ -46,6 +39,14 @@ module HyperTraverser
 
     def self.collection(state)
       state.instance_variable_get "@collection"
+    end
+
+    def self.resolve_object(obj)
+      if obj.class.respond_to? :resolve 
+        obj.class.resolve(obj)
+      else
+        obj
+      end
     end
   end
 end
