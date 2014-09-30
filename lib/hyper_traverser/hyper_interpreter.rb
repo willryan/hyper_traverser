@@ -1,8 +1,3 @@
-require_relative 'hyper'
-require_relative 'hyper_action'
-require_relative 'hyper_state'
-require_relative 'hyper_link'
-
 module HyperTraverser
   class HyperInterpreter
     class << self
@@ -14,13 +9,13 @@ module HyperTraverser
           if v.is_a? Hash
             if v.keys.include? "action"
               actions[k] = HyperAction.new v
-            elsif v.keys == ['href']          
+            elsif v.keys == ['href']
               links[k] = HyperLink.new v['href']
             else
               data[k] = self.create v
             end
           elsif v.is_a? Array
-            data[k] = v.map do |val| self.create(val) end 
+            data[k] = v.map do |val| self.create(val) end
           else
             data[k] = v
           end

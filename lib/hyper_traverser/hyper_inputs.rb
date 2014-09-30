@@ -1,5 +1,3 @@
-require_relative 'hyper_input'
-
 module HyperTraverser
   class HyperInputs
     def initialize(inputs)
@@ -15,14 +13,14 @@ module HyperTraverser
         if @inputs[key]
           @inputs[key].value = params[0]
         else
-          raise "no input #{key}"
+          raise HyperException, "no input #{key}"
         end
       else # getter
         key = method.to_s
         if @inputs[key]
           @inputs[key].value
         else
-          raise "no input #{key}"
+          raise HyperException, "no input #{key}"
         end
       end
     end

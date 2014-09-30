@@ -1,6 +1,3 @@
-require_relative 'hyper'
-require_relative 'hyper_inputs'
-
 module HyperTraverser
   class HyperAction
     attr_reader :inputs

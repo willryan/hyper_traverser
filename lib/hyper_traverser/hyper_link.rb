@@ -1,5 +1,3 @@
-require_relative 'hyper'
-
 module HyperTraverser
   class HyperLink
     def initialize(url)
