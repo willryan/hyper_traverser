@@ -8,6 +8,7 @@ group :dev, :test do
 end
 
 group :test do
+  gem "fuubar"
   gem "rspec"
   gem "mocha"
 end
