@@ -16,8 +16,9 @@ module HyperTraverser
         if payload
           request.set_form_data payload
         end
-        response = Net::HTTP.request request
-        data = JSON.parse(response)  
+        http = Net::HTTP.new(uri.hostname, uri.port)
+        response = http.request request
+        data = JSON.parse(response.body)
         HyperInterpreter.create data
       end
 
